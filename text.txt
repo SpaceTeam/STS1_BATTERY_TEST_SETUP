@@ -1,0 +1,82 @@
+
+# Design
+### 1. Requirements
+- Portable
+- Plug and Play
+- Input voltage 6V-12V
+- PC connection only needed for configuration and reading Data
+	- configuring tests should be quick and easy and shall not require recompiling and uploading the firmware
+    - also can display status and turn it off
+- shall measure and record the following for every cell:
+	- cell volate (works in open circute and under load/charging)
+	- cell current flow
+	- cell temperature
+- fail save
+	- eg.: cell temp, voltage, current is high/low stop
+
+
+
+
+### 2. Concept
+
+we only measue volatage, current and temperature and write those to memory
+
+recorded values while chare and discharge cycles:
+- cell volate (open circute and under load/charging)
+- cell current flow
+- cell temperature
+
+From thoes we can calculate:
+- Capacity 
+- Charge/Discharge curve
+- Change of charge/discharge curve over multiple charging cycles
+- Capacity loss over discharge cycles
+- Temperature
+- Dependency of Internal resistance/capacity to temperature
+
+Seperate Test for
+- Internal resistance
+This is a "point in time" measure menat and doesnt have to be continuesly messured during charging/discharging
+
+
+#### 2.1. adf
+
+[![image-1659465364679.png](https://wiki.tust.at/uploads/images/gallery/2022-08/scaled-1680-/image-1659465364679.png)](https://wiki.tust.at/uploads/images/gallery/2022-08/image-1659465364679.png)
+
+
+##### Power Management
+This will take the input, and supply the components with a constant volatage.
+
+##### Board
+
+##### PC
+We can connect tho the teststand via USB. There will be a simple ClI tool to configure tests and receive the data. This will also handle converting the voltage and current readings into capacity, discharge curves, etc.
+
+##### HAT
+This will be a hat for the [STM32F411RE Nucleo Board](?) ([Pinout](https://os.mbed.com/platforms/ST-Nucleo-F411RE/))
+
+The µC does have 512kB of Flasch. Also this is used for the program itself so we cannot use it all. The empty Project is 13KB. Lets assume we will have ~450KB
+
+We are collection the voltage, the current and the temparture (12 bit ADCs, will be 2 bytes each, way simpler to store) Maybe we also want to store a timestamp, so another 3-4 bytes
+
+Makes: 10 bytes per Sample
+
+Lets say we sample every of the 8 channels every 5 seconds, we get
+
+8 channles * 10 bytes/sample/channel * 1/5 samples/sec * 3600 sec/hour = 57600 bytes/hour
+
+Which fills up the 450KB in about 7.8 hours. Also we will have to save some metadate like which test, which cell, etc. so it will go down even more
+
+But this will ultimaltly be deciede by the samplingragte we want ad if we want to let it run for multiple days or only for hours.
+We can design the PCB to include an external falsh memory and only solder it on if we need it.
+
+
+##### Testsetup Single Cell
+[![image-1659465364681.png](https://wiki.tust.at/uploads/images/gallery/2022-08/scaled-1680-/image-1659465364681.png)](https://wiki.tust.at/uploads/images/gallery/2022-08/image-1659465364681.png)
+
+We need to measure the voltage, current and temperature of the cell.
+
+For Discharging we will have a resistor to burn the energy and a transistor to controll the current. the transistor will be controll via PWM and with a lot of filtering we should be able to controll the discharge rate.
+
+For Charging we will also us a transistor ctrolled via PWM and a bunch of filtering to controll the charging rate.
+We will use the constant current then constant voltage approach to charge the cell. With the transistor we can controll the voltage wich in turn drives the current and
