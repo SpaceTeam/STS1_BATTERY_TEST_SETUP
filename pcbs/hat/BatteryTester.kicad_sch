@@ -205,11 +205,11 @@
   )
   (bus_entry (at 124.46 50.8) (size 2.54 2.54)
     (stroke (width 0) (type default) (color 0 0 0 0))
-    (uuid 9e8082ab-c4eb-426d-97c3-b9ce2c639445)
+    (uuid 9e8082ab-c4eb-426d-97c3-b9ce2c639446)
   )
   (bus_entry (at 124.46 46.99) (size 2.54 2.54)
     (stroke (width 0) (type default) (color 0 0 0 0))
-    (uuid 9e8082ab-c4eb-426d-97c3-b9ce2c639445)
+    (uuid 9e8082ab-c4eb-426d-97c3-b9ce2c639447)
   )
   (bus_entry (at 124.46 80.01) (size 2.54 2.54)
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -1364,70 +1364,70 @@
       (reference "TH8") (unit 1) (value "Thermistor_NTC") (footprint "")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/221d2228-c38c-4e91-9c4b-fff11a17e58e"
-      (reference "U1") (unit 1) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 1) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/da14cec2-af1a-4ccd-97ca-d1113b7d11f9"
-      (reference "U1") (unit 2) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 2) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/179593d6-9f9c-45ab-bc93-a9aeecba7d6f"
-      (reference "U1") (unit 3) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 3) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/06cbbbbf-5b34-4adb-bb3b-d95cbda17ff5"
-      (reference "U1") (unit 4) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 4) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/67d49e36-38c4-4be3-b2a0-33c88108f32a"
-      (reference "U1") (unit 5) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 5) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/db276aa6-f305-4e06-9969-ec1e82b56610"
-      (reference "U1") (unit 6) (value "NUCLEO-F401RE") (footprint "ST_NUCLEO-F401RE")
+      (reference "U1") (unit 6) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
     )
     (path "/adef68bd-43f7-4ab9-8f88-8ab011947073/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U2") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/adef68bd-43f7-4ab9-8f88-8ab011947073/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U3") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/adef68bd-43f7-4ab9-8f88-8ab011947073/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U3") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/45415869-037b-4734-b7b1-80167f1284b9/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U4") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/45415869-037b-4734-b7b1-80167f1284b9/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U5") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/45415869-037b-4734-b7b1-80167f1284b9/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U5") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/0ca237a3-dad6-41e8-8464-f1b27ed07c57/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U6") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/0ca237a3-dad6-41e8-8464-f1b27ed07c57/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U7") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/0ca237a3-dad6-41e8-8464-f1b27ed07c57/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U7") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/b658c520-4cca-4ed1-b95b-fdc75e11d476/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U8") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/b658c520-4cca-4ed1-b95b-fdc75e11d476/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U9") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/b658c520-4cca-4ed1-b95b-fdc75e11d476/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U9") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/44058b29-c6cd-4d90-8de6-d329335bcc2f/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U10") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/44058b29-c6cd-4d90-8de6-d329335bcc2f/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U11") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/44058b29-c6cd-4d90-8de6-d329335bcc2f/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U11") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/7de206d6-82af-4599-a5c6-78de86edc2f1/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U12") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/7de206d6-82af-4599-a5c6-78de86edc2f1/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U13") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/7de206d6-82af-4599-a5c6-78de86edc2f1/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U13") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/6e86ac6d-2ad3-420e-b4dd-45ddedb8924f/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U14") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/6e86ac6d-2ad3-420e-b4dd-45ddedb8924f/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U15") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/6e86ac6d-2ad3-420e-b4dd-45ddedb8924f/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U15") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
     (path "/5f9238e3-0585-4ad0-b989-1913e46261fe/3c814c0f-083c-4af4-9e79-f09a210a8f07"
       (reference "U16") (unit 1) (value "INA195") (footprint "Package_TO_SOT_SMD:SOT-23-5")
     )
-    (path "/5f9238e3-0585-4ad0-b989-1913e46261fe/f2359832-fd23-450e-af0a-919706a3259e"
-      (reference "U17") (unit 1) (value "TP5000-Breakout-Akaddy") (footprint "")
+    (path "/5f9238e3-0585-4ad0-b989-1913e46261fe/24ec9440-d7e1-4cd0-96e7-6c153e938e09"
+      (reference "U17") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "")
     )
   )
 )
