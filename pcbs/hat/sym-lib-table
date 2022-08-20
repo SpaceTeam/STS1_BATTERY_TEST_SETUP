@@ -10,4 +10,5 @@
   (lib (name "STS_Timer")(type "KiCad")(uri "${KIPRJMOD}/../../libs/symbol/STS_Timer.kicad_sym")(options "")(descr ""))
   (lib (name "STS_Analog")(type "KiCad")(uri "${KIPRJMOD}/../../libs/symbol/STS_Analog.kicad_sym")(options "")(descr ""))
   (lib (name "STS_Boards")(type "KiCad")(uri "${KIPRJMOD}/../../libs/symbol/STS_Boards.kicad_sym")(options "")(descr ""))
+  (lib (name "STS_Other")(type "KiCad")(uri "${KIPRJMOD}/../../libs/symbol/STS_Other.kicad_sym")(options "")(descr ""))
 )
