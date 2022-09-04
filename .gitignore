@@ -7,4 +7,9 @@ pcbs/hat/BatteryTester-backups/*
 *.sch-bak
 *~
 _autosave-*
+*#auto_saved_files#
 fp-info-cache
+
+sims/*.log
+sims/*.op.raw
+sims/*.raw
