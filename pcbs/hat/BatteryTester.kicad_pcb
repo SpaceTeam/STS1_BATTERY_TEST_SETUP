@@ -8649,7 +8649,7 @@
     (property "STANDARD" "Manufacturer Recommendations")
     (property "Sheetfile" "board.kicad_sch")
     (property "Sheetname" "Board")
-    (path "/214be44c-458d-40b3-8c50-da13447c35eb/db276aa6-f305-4e06-9969-ec1e82b56610")
+    (path "/214be44c-458d-40b3-8c50-da13447c35eb/221d2228-c38c-4e91-9c4b-fff11a17e58e")
     (attr through_hole)
     (fp_text reference "U17" (at -31.825 -42.635) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
