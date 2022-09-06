@@ -1305,7 +1305,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6f6d995f-11ce-415e-8fc8-c459285afc0f)
   )
-  (text "V_{to} < 3V\n" (at 207.01 144.78 0)
+  (text "V_{to} < 2.5V\n" (at 207.01 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 851762a1-eafa-44fb-88ff-b5e0a9f1c219)
   )
