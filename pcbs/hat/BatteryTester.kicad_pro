@@ -48,7 +48,13 @@
           "min_clearance": 0.508
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -112,8 +118,24 @@
         "solder_mask_min_width": 0.0,
         "use_height_for_length_calcs": true
       },
-      "track_widths": [],
-      "via_dimensions": [],
+      "track_widths": [
+        0.0,
+        0.0,
+        0.2,
+        0.4,
+        1.0,
+        3.0
+      ],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        },
+        {
+          "diameter": 0.6,
+          "drill": 0.6
+        }
+      ],
       "zones_allow_external_fillets": false,
       "zones_use_no_outline": true
     },
@@ -437,7 +459,7 @@
     ],
     [
       "7de206d6-82af-4599-a5c6-78de86edc2f1",
-      "test-battery-8"
+      "test-battery-6"
     ],
     [
       "6e86ac6d-2ad3-420e-b4dd-45ddedb8924f",
@@ -445,7 +467,7 @@
     ],
     [
       "5f9238e3-0585-4ad0-b989-1913e46261fe",
-      "test-battery-6"
+      "test-battery-8"
     ],
     [
       "214be44c-458d-40b3-8c50-da13447c35eb",

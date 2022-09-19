@@ -10,4 +10,5 @@
   (lib (name "STS_Connector")(type "KiCad")(uri "${KIPRJMOD}/../../libs/footprint/STS_Connector.pretty")(options "")(descr ""))
   (lib (name "STS_Resistor_SMD")(type "KiCad")(uri "${KIPRJMOD}/../../libs/footprint/STS_Resistor_SMD.pretty")(options "")(descr ""))
   (lib (name "STS_Boards")(type "KiCad")(uri "${KIPRJMOD}/../../libs/footprint/STS_Boards.pretty")(options "")(descr ""))
+  (lib (name "CustomFootprints")(type "KiCad")(uri "${KIPRJMOD}/CustomFootprints.pretty")(options "")(descr ""))
 )
