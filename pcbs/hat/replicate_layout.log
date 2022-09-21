@@ -1,85 +1,66 @@
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 303:Plugin executed on: 'win32'
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 304:Plugin executed with python version: '3.9.10 (main, Jun 24 2022, 05:34:59) [MSC v.1932 64 bit (AMD64)]'
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 305:KiCad build version: (6.0.6)
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 306:Plugin version: 1.2.1
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 307:Frame repr: <wx._core.Frame object at 0x00000237C8FF45E0>
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 331:Preparing replicator with U2 as a reference
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 106:getting a list of all footprints on board
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 359:source anchor footprint is 'U2'
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 303:Plugin executed on: 'win32'
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 304:Plugin executed with python version: '3.9.10 (main, Jun 24 2022, 05:34:59) [MSC v.1932 64 bit (AMD64)]'
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 305:KiCad build version: (6.0.6)
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 306:Plugin version: 1.2.1
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 307:Frame repr: <wx._core.Frame object at 0x000002378FA9B5E0>
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 331:Preparing replicator with U2 as a reference
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.replicate_layout 106:getting a list of all footprints on board
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 359:source anchor footprint is 'U2'
 Located on: ['test-battery-1']
 With filenames: ['test-battery.kicad_sch']
 With sheet_id:['test-battery-1']
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 366:Corresponding footprints are 
-[('U4', ['test-battery-2']), ('U14', ['test-battery-7']), ('U16', ['test-battery-8']), ('U12', ['test-battery-6']), ('U10', ['test-battery-5']), ('U8', ['test-battery-4']), ('U6', ['test-battery-3']), ('U2', ['test-battery-1'])]
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 378:Showing dialog
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 384:Toolbar position: wx.Point(7614, 130)
-09-19 23:28:51 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 390:Dialog position: wx.Point(7250, 130)
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 157:Replicating layout
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 154:Starting replication of sheets: [['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 366:Corresponding footprints are 
+[('U6', ['test-battery-3']), ('U14', ['test-battery-7']), ('U12', ['test-battery-6']), ('U8', ['test-battery-4']), ('U4', ['test-battery-2']), ('U10', ['test-battery-5']), ('U2', ['test-battery-1']), ('U16', ['test-battery-8'])]
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 378:Showing dialog
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:47 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:48 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 384:Toolbar position: wx.Point(3774, 130)
+09-20 00:06:48 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 390:Dialog position: wx.Point(3410, 130)
+09-20 00:06:49 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:49 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:49 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:50 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:51 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:52 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['test-battery-1']
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'test-battery-1', file:'test-battery.kicad_sch'
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 157:Replicating layout
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 154:Starting replication of sheets: [['test-battery-2'], ['test-battery-3'], ['test-battery-4'], ['test-battery-5'], ['test-battery-6'], ['test-battery-7'], ['test-battery-8']]
 on level: ['test-battery-1']
-with tracks=True, zone=True, text=True, text=True, containing=True, remove=False, locked footprints=False, by_group=False
-09-19 23:28:53 root 243:updating GUI message: 'Preparing for replication'
-09-19 23:28:53 root 248:updating GUI with: 0
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 224:Getting the list of source footprints
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 239:Getting the list of all the remaining footprints
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 244:Getting nets local to source footprints
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 247:Getting source bounding box
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 251:Getting source tracks
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 266:Getting source zones
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 275:Getting source text items
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 284:Getting source drawing items
-09-19 23:28:53 root 243:updating GUI message: 'Replicating footprints'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 678:Replicating footprints
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-2']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-3']
-09-19 23:28:53 root 248:updating GUI with: 20
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-4']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-5']
-09-19 23:28:53 root 248:updating GUI with: 51
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-6']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-7']
-09-19 23:28:53 root 248:updating GUI with: 81
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-8']
-09-19 23:28:53 root 243:updating GUI message: 'Replicating tracks'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 844:Replicating tracks
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-2']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-3']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-4']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-5']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-6']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-7']
-09-19 23:28:53 root 248:updating GUI with: 78
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['test-battery-8']
-09-19 23:28:53 root 243:updating GUI message: 'Replicating zones'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 909:Replicating zones
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-2']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-3']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-4']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-5']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-6']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-7']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['test-battery-8']
-09-19 23:28:53 root 243:updating GUI message: 'Replicating text'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 985:Replicating text
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-2']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-3']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-4']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-5']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-6']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-7']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['test-battery-8']
-09-19 23:28:53 root 243:updating GUI message: 'Replicating drawings'
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1032:Replicating drawings
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-2']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-3']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-4']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-5']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-6']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-7']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['test-battery-8']
-09-19 23:28:53 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 177:Replication complete
+with tracks=False, zone=False, text=False, text=False, containing=True, remove=False, locked footprints=False, by_group=False
+09-20 00:06:53 root 243:updating GUI message: 'Preparing for replication'
+09-20 00:06:53 root 248:updating GUI with: 0
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 224:Getting the list of source footprints
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 239:Getting the list of all the remaining footprints
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 244:Getting nets local to source footprints
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 247:Getting source bounding box
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 251:Getting source tracks
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 266:Getting source zones
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 275:Getting source text items
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 284:Getting source drawing items
+09-20 00:06:53 root 243:updating GUI message: 'Replicating footprints'
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 678:Replicating footprints
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-2']
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-3']
+09-20 00:06:53 root 248:updating GUI with: 18
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-4']
+09-20 00:06:53 root 248:updating GUI with: 40
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-5']
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-6']
+09-20 00:06:53 root 248:updating GUI with: 65
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-7']
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['test-battery-8']
+09-20 00:06:53 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 177:Replication complete

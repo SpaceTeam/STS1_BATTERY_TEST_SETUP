@@ -2466,30 +2466,6 @@
     (path "/2f67347d-5ab5-4421-bf64-2d88995b84e1/6866ca87-f900-49ad-8f03-fa5bcf89d495"
       (reference "R58") (unit 1) (value "100") (footprint "Resistor_SMD:R_0805_2012Metric")
     )
-    (path "/adef68bd-43f7-4ab9-8f88-8ab011947073/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM1") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/45415869-037b-4734-b7b1-80167f1284b9/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM2") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/0ca237a3-dad6-41e8-8464-f1b27ed07c57/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM3") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/b658c520-4cca-4ed1-b95b-fdc75e11d476/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM4") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/44058b29-c6cd-4d90-8de6-d329335bcc2f/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM5") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/7de206d6-82af-4599-a5c6-78de86edc2f1/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM6") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/6e86ac6d-2ad3-420e-b4dd-45ddedb8924f/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM7") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
-    (path "/5f9238e3-0585-4ad0-b989-1913e46261fe/9deb0acb-ee35-4272-b31a-000c5c7632a1"
-      (reference "SYM8") (unit 1) (value "Courtyard for replication") (footprint "CustomFootprints:replication_courtyard")
-    )
     (path "/adef68bd-43f7-4ab9-8f88-8ab011947073/44834810-8f29-46e3-b150-88141db85c6b"
       (reference "TH1") (unit 1) (value "Thermistor_NTC_10k") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical")
     )
