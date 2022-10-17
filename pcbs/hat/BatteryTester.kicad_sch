@@ -2548,22 +2548,22 @@
       (reference "U16") (unit 1) (value "TP5000_Breakout_Akaddy") (footprint "STS_Boards:TP5000_Breakout_Akaddy")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/221d2228-c38c-4e91-9c4b-fff11a17e58e"
-      (reference "U17") (unit 1) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 1) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/da14cec2-af1a-4ccd-97ca-d1113b7d11f9"
-      (reference "U17") (unit 2) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 2) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/179593d6-9f9c-45ab-bc93-a9aeecba7d6f"
-      (reference "U17") (unit 3) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 3) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/06cbbbbf-5b34-4adb-bb3b-d95cbda17ff5"
-      (reference "U17") (unit 4) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 4) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/67d49e36-38c4-4be3-b2a0-33c88108f32a"
-      (reference "U17") (unit 5) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 5) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/214be44c-458d-40b3-8c50-da13447c35eb/db276aa6-f305-4e06-9969-ec1e82b56610"
-      (reference "U17") (unit 6) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64_MountingHoles")
+      (reference "U17") (unit 6) (value "NUCLEO-F401RE") (footprint "STS_Boards:ST_Morpho_Connector_64")
     )
     (path "/2f67347d-5ab5-4421-bf64-2d88995b84e1/7317638e-edaa-4064-8813-96cfe5132c76"
       (reference "U18") (unit 1) (value "ADS7828") (footprint "Package_SO:TSSOP-16_4.4x5mm_P0.65mm")
