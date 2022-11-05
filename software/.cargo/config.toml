@@ -1,0 +1,19 @@
+[alias]
+run-board = "flash -p board --chip STM32F411RETx --target thumbv7em-none-eabihf --release"
+run-client = "run -p client"
+
+build-board = "build -p board --target thumbv7em-none-eabihf --release"
+build-client = "build -p client"
+
+test-client = "test -p client"
+test-firmware = "test -p firmware"
+test-transmission = "test -p transmission"
+test-all = "test -p client -p firmware -p transmission"
+
+[target.thumbv7em-none-eabihf]
+rustflags = [
+  "-C", "link-arg=-Tlink.x",
+]
+
+# [target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# runner = "cargo embed --chip STM32F411RETx "

@@ -66,6 +66,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
+name = "board"
+version = "0.1.0"
+dependencies = [
+ "bbqueue",
+ "cortex-m",
+ "cortex-m-rtic",
+ "panic-rtt-target",
+ "rtt-target",
+ "stm32f4xx-hal",
+ "systick-monotonic",
+]
+
+[[package]]
 name = "byteorder"
 version = "1.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -76,6 +89,10 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
+name = "client"
+version = "0.1.0"
 
 [[package]]
 name = "cortex-m"
@@ -182,6 +199,10 @@ name = "embedded-storage"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "723dce4e9f25b6e6c5f35628e144794e5b459216ed7da97b7c4b66cdb3fa82ca"
+
+[[package]]
+name = "firmware"
+version = "0.1.0"
 
 [[package]]
 name = "fugit"
@@ -510,19 +531,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "stm32f411-battery-tester"
-version = "0.1.0"
-dependencies = [
- "bbqueue",
- "cortex-m",
- "cortex-m-rtic",
- "panic-rtt-target",
- "rtt-target",
- "stm32f4xx-hal",
- "systick-monotonic",
-]
-
-[[package]]
 name = "stm32f4xx-hal"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -584,6 +592,10 @@ name = "time-core"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2e153e1f1acaef8acc537e68b44906d2db6436e2b35ac2c6b42640fff91f00fd"
+
+[[package]]
+name = "transmission"
+version = "0.1.0"
 
 [[package]]
 name = "ufmt-write"
