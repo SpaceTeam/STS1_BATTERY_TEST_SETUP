@@ -1,0 +1,23 @@
+[package]
+name = "stm32f411-battery-tester"
+version = "0.1.0"
+authors = ["Roland Strasser <roland.strasser@spaceteam.at>"]
+edition = "2021"
+
+[dependencies]
+cortex-m-rtic = "1.0.0"
+systick-monotonic = "1.0.0"
+cortex-m = "0.7.6"
+bbqueue = "0.5.1"
+
+[dependencies.rtt-target]
+version = "0.3.1"
+features = ["cortex-m"]
+
+[dependencies.panic-rtt-target]
+version = "0.1.2"
+features = ["cortex-m"]
+
+[dependencies.stm32f4xx-hal]
+version = "0.13.2"
+features = ["stm32f411", "rt", "rtic-monotonic"]
