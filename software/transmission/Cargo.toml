@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+heapless = "0.7.16"
+postcard = "1.0.2"
+serde = "1.0.147"
+serde_derive = "1.0.147"
