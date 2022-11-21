@@ -1,8 +1,8 @@
 #![deny(unsafe_code)]
 #![no_main]
 #![no_std]
-#![allow(unused_imports)]
 
+#[allow(unused_imports)]
 use panic_rtt_target as _panic_handler;
 use rtic::app;
 
@@ -10,14 +10,12 @@ use rtic::app;
 mod app {
     use bbqueue::{BBBuffer, Consumer, Producer};
     use core::fmt::Write;
-    use core::sync::atomic::{AtomicUsize, Ordering};
-    use rtt_target::{rprintln, rtt_init_print};
+    use rtt_target::rtt_init_print;
     use stm32f4xx_hal::block;
-    use stm32f4xx_hal::dma::traits::SafePeripheralRead;
     use stm32f4xx_hal::serial::Event;
     use stm32f4xx_hal::{
-        gpio::{gpioa::PA0, gpioc::PC6, Alternate, Edge, Input, Output, Pin, PushPull},
-        hal, pac,
+        gpio::{Output, Pin, PushPull},
+        pac,
         prelude::*,
         serial::*,
     };
