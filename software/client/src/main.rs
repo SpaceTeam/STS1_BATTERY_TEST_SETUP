@@ -10,7 +10,7 @@ use transmission::{
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub enum MsgTypes {
-    Msg(String<32>),
+    Msg(String<128>),
     Test1(u32),
     Test2(f32, u8),
 }

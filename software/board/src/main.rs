@@ -3,13 +3,11 @@
 #![no_std]
 
 #[allow(unused_imports)]
-use panic_rtt_target as _panic_handler;
 use rtic::app;
 
 use bbqueue::{BBBuffer, Consumer, Producer};
 use core::fmt::Write;
 use heapless::String;
-use rtt_target::rtt_init_print;
 use serde::{Deserialize, Serialize};
 use stm32f4xx_hal::block;
 use stm32f4xx_hal::serial::Event;
@@ -20,10 +18,53 @@ use stm32f4xx_hal::{
     serial::*,
 };
 use systick_monotonic::{fugit::Duration, Systick};
-use transmission::{
-    receive::receive,
-    send::{send, setup},
-};
+use transmission::send::{send, setup};
+
+use crate::app::MsgTypes;
+
+#[panic_handler]
+fn panic(info: &core::panic::PanicInfo) -> ! {
+    #[allow(unsafe_code)]
+    let dp = unsafe { pac::Peripherals::steal() };
+
+    let gpioa = dp.GPIOA.split();
+    let mut led = gpioa.pa5.into_push_pull_output();
+
+    let rcc = dp.RCC.constrain();
+    let _clocks = rcc.cfgr.sysclk(48.MHz()).freeze();
+
+    // TODO: Move the config to a variable and use it in the init function
+    let mut tx: Tx<pac::USART2, u8> = Serial::tx(
+        dp.USART2,
+        gpioa.pa2,
+        Config::default()
+            .baudrate(115200.bps())
+            .wordlength_8()
+            .parity_none(),
+        &_clocks,
+    )
+    .unwrap();
+
+    let mut msg: String<128> = heapless::String::new();
+    write!(msg, "{}", info).unwrap();
+
+    let buf: BBBuffer<128> = BBBuffer::new();
+    let (mut prod, mut cons) = buf.try_split().unwrap();
+
+    setup(&mut prod);
+    send(&mut prod, MsgTypes::Msg(msg)).unwrap();
+
+    cons.read().unwrap().iter().for_each(|&byte| {
+        block!(tx.write(byte)).unwrap();
+    });
+
+    loop {
+        led.set_low();
+        cortex_m::asm::delay(3_000_000);
+        led.set_high();
+        cortex_m::asm::delay(3_000_000);
+    }
+}
 
 #[app(device = stm32f4xx_hal::pac, peripherals = true, dispatchers = [TIM2 ])]
 mod app {
@@ -34,7 +75,7 @@ mod app {
 
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     pub enum MsgTypes {
-        Msg(String<32>),
+        Msg(String<128>),
         Test1(u32),
         Test2(f32, u8),
     }
@@ -60,14 +101,11 @@ mod app {
 
     #[init]
     fn init(ctx: init::Context) -> (Shared, Local, init::Monotonics) {
-        rtt_init_print!();
-
         let rcc = ctx.device.RCC.constrain();
         let _clocks = rcc.cfgr.sysclk(48.MHz()).freeze();
 
         let gpioa = ctx.device.GPIOA.split();
         let led = gpioa.pa5.into_push_pull_output();
-        // let mut sys_cfg = ctx.device.SYSCFG.constrain();
 
         let mono = Systick::new(ctx.core.SYST, 48_000_000);
 
@@ -84,14 +122,14 @@ mod app {
 
         s.listen(Event::Rxne);
 
-        let (mut tx, rx) = s.split();
+        let (tx, rx) = s.split();
         let (prod_rx, cons_rx) = UART_RX_BUFFER.try_split().unwrap();
         let (mut prod_tx, cons_tx) = UART_TX_BUFFER.try_split().unwrap();
 
         blink::spawn().ok();
 
         setup(&mut prod_tx);
-        send(&mut prod_tx, MsgTypes::Msg(String::from("IT WORKS!!!")));
+        send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
 
         (
             Shared { prod_tx, cons_rx },
@@ -107,10 +145,10 @@ mod app {
     }
 
     #[task(local = [led, tx, cons_tx], shared =[prod_tx], priority = 4)]
-    fn blink(mut ctx: blink::Context) {
+    fn blink(ctx: blink::Context) {
         ctx.local.led.toggle();
 
-        let rgr = match ctx.local.cons_tx.read() {
+        match ctx.local.cons_tx.read() {
             Ok(rgr) => {
                 rgr.buf()
                     .iter()
@@ -126,7 +164,7 @@ mod app {
     }
 
     #[task(binds = USART2, local = [rx, prod_rx])]
-    fn serial(mut ctx: serial::Context) {
+    fn serial(ctx: serial::Context) {
         match block!(ctx.local.rx.read()) {
             Ok(byte) => {
                 if let Ok(mut wgr) = ctx.local.prod_rx.grant_exact(1) {

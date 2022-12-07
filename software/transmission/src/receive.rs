@@ -139,6 +139,14 @@ mod tests {
             });
             assert!(called.get());
         }
+        {
+            let called = Cell::new(false);
+            decode::<MsgTypes, 32>(&mut [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0], |msg| {
+                assert_eq!(msg, MsgTypes::Msg(String::from("PANIC!!!")));
+                called.set(true);
+            });
+            assert!(called.get());
+        }
     }
 
     #[test]
@@ -161,6 +169,11 @@ mod tests {
         }
 
         t!([0, 4, 3, 1, 18, 0], true, MsgTypes::Test1(18));
+        t!(
+            [0, 11, 1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0,],
+            true,
+            MsgTypes::Msg(String::from("PANIC!!!"))
+        );
         t!([1, 1, 0, 0, 0, 4, 3, 1, 18, 0], true, MsgTypes::Test1(18));
 
         t!([99, 4, 3, 1, 18, 0], false, MsgTypes::Test1(18));

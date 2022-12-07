@@ -64,6 +64,12 @@ mod tests {
 
         let res = encode::<MsgTypes, 32>(&MsgTypes::Msg(String::from("Hello")));
         assert_eq!(res, Ok(hVec!(32, [1, 7, 5, 72, 101, 108, 108, 111, 0])));
+
+        let res = encode::<MsgTypes, 32>(&MsgTypes::Msg(String::from("PANIC!!!")));
+        assert_eq!(
+            res,
+            Ok(hVec!(32, [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0,]))
+        );
     }
 
     #[test]
