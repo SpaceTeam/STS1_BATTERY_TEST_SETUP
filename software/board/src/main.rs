@@ -12,6 +12,10 @@ use serde::{Deserialize, Serialize};
 use stm32f4xx_hal::block;
 use stm32f4xx_hal::serial::Event;
 use stm32f4xx_hal::{
+    adc::{
+        config::{AdcConfig, Clock, ExternalTrigger, SampleTime, Sequence, TriggerMode},
+        Adc,
+    },
     gpio::{Output, Pin, PushPull},
     pac,
     prelude::*,
@@ -107,6 +111,18 @@ mod app {
         let gpioa = ctx.device.GPIOA.split();
         let led = gpioa.pa5.into_push_pull_output();
 
+        let config = AdcConfig::default();
+
+        let analog = gpioa.pa0.into_analog();
+        let mut adc = Adc::adc1(ctx.device.ADC1, true, config);
+
+        adc.configure_channel(&analog, Sequence::One, SampleTime::Cycles_112);
+        adc.enable();
+        adc.start_conversion();
+
+        // let val = adc.current_sample();
+        let val = adc.convert(&analog, SampleTime::Cycles_112);
+
         let mono = Systick::new(ctx.core.SYST, 48_000_000);
 
         let mut s = Serial::new(
@@ -129,7 +145,8 @@ mod app {
         blink::spawn().ok();
 
         setup(&mut prod_tx);
-        send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
+        // send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
+        send(&mut prod_tx, MsgTypes::Test1(val as u32)).unwrap();
 
         (
             Shared { prod_tx, cons_rx },
@@ -159,6 +176,8 @@ mod app {
             }
             _ => (),
         };
+                
+        let x = true?a:b;
 
         blink::spawn_after(Duration::<u64, 1, 1000>::from_ticks(1500)).ok();
     }

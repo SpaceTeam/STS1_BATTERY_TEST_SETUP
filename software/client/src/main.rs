@@ -2,7 +2,11 @@ use bbqueue::{BBBuffer, Consumer, Producer};
 use heapless::String;
 use serde::{Deserialize, Serialize};
 use serialport::{self, SerialPort};
-use std::{thread, time};
+use std::{
+    fs::read,
+    io::{BufReader, Read},
+    thread, time,
+};
 use transmission::{
     receive::receive,
     send::{send, setup},
@@ -30,21 +34,32 @@ fn main() {
     let (mut prod_rx, mut cons_rx) = buf_rx.try_split().unwrap();
 
     let count = port.bytes_to_read().unwrap() as usize;
-    let mut buf = vec![0u8; count as usize];
-    port.read(&mut buf);
-    dbg!(&buf);
 
-    let mut wgr = prod_rx.grant_exact(count).unwrap();
-    wgr.buf().copy_from_slice(buf.as_slice());
-    wgr.commit(count);
+    loop {
+        // let size = port.bytes_to_read().unwrap();
 
-    // dbg!(cons_rx.read().unwrap());
+        let mut buf = [0u8; 1];
+        let count = port.read(&mut buf).unwrap();
 
-    // receive(cons, cb)
-    receive::<MsgTypes, 1024>(&mut cons_rx, |msg| {
-        println!("{:?}", msg);
-    });
+        println!("bytes: {}", count);
+        // let mut buf = vec![0u8; size as usize];
 
+        dbg!(&buf);
+
+        let mut wgr = prod_rx.grant_exact(count).unwrap();
+        wgr.buf().copy_from_slice(buf.as_slice());
+        wgr.commit(count);
+
+        // dbg!(cons_rx.read().unwrap());
+
+        // receive(cons, cb)
+        receive::<MsgTypes, 1024>(&mut cons_rx, |msg| {
+            println!("{:?}", msg);
+        });
+
+        let d = std::time::Duration::from_millis(10);
+        std::thread::sleep(d);
+    }
     // print_input(&mut port);
 
     // write!(port, "Received {} bytes", count).unwrap();
