@@ -22,7 +22,10 @@ use stm32f4xx_hal::{
     serial::*,
 };
 use systick_monotonic::{fugit::Duration, Systick};
-use transmission::send::{send, setup};
+use transmission::{
+    receive::receive,
+    send::{send, setup},
+};
 
 use crate::app::MsgTypes;
 
@@ -57,6 +60,7 @@ fn panic(info: &core::panic::PanicInfo) -> ! {
 
     setup(&mut prod);
     send(&mut prod, MsgTypes::Msg(msg)).unwrap();
+    send(&mut prod, MsgTypes::Ping(128)).unwrap();
 
     cons.read().unwrap().iter().for_each(|&byte| {
         block!(tx.write(byte)).unwrap();
@@ -64,9 +68,9 @@ fn panic(info: &core::panic::PanicInfo) -> ! {
 
     loop {
         led.set_low();
-        cortex_m::asm::delay(3_000_000);
+        cortex_m::asm::delay(4_000_000);
         led.set_high();
-        cortex_m::asm::delay(3_000_000);
+        cortex_m::asm::delay(12_000_000);
     }
 }
 
@@ -80,6 +84,7 @@ mod app {
     #[derive(Serialize, Deserialize, Debug, PartialEq)]
     pub enum MsgTypes {
         Msg(String<128>),
+        Ping(u16),
         Test1(u32),
         Test2(f32, u8),
     }
@@ -145,8 +150,7 @@ mod app {
         blink::spawn().ok();
 
         setup(&mut prod_tx);
-        // send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
-        send(&mut prod_tx, MsgTypes::Test1(val as u32)).unwrap();
+        send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
 
         (
             Shared { prod_tx, cons_rx },
@@ -161,8 +165,21 @@ mod app {
         )
     }
 
-    #[task(local = [led, tx, cons_tx], shared =[prod_tx], priority = 4)]
-    fn blink(ctx: blink::Context) {
+    #[task(local = [led, tx, cons_tx], shared =[prod_tx, cons_rx], priority = 4)]
+    fn blink(mut ctx: blink::Context) {
+        macro_rules! handle_msg {
+            ($ctx:expr, $msg:expr) => {
+                match $msg {
+                    MsgTypes::Ping(number) => {
+                        $ctx.shared.prod_tx.lock(|prod_tx| {
+                            send(prod_tx, MsgTypes::Ping(number + 1)).unwrap();
+                        });
+                    }
+                    _ => {}
+                }
+            };
+        }
+
         ctx.local.led.toggle();
 
         match ctx.local.cons_tx.read() {
@@ -176,10 +193,25 @@ mod app {
             }
             _ => (),
         };
-                
-        let x = true?a:b;
 
-        blink::spawn_after(Duration::<u64, 1, 1000>::from_ticks(1500)).ok();
+        ctx.shared.cons_rx.lock(|cons_rx| {
+            receive(cons_rx, |val| match val {
+                Ok(msg) => {
+                    handle_msg!(ctx, msg);
+                }
+                Err(e) => {
+                    ctx.shared.prod_tx.lock(|prod_tx| {
+                        send(
+                            prod_tx,
+                            MsgTypes::Msg(String::from("Board dropped an invalid packet")),
+                        )
+                        .unwrap();
+                    });
+                }
+            });
+        });
+
+        blink::spawn_after(Duration::<u64, 1, 1000>::from_ticks(50)).ok();
     }
 
     #[task(binds = USART2, local = [rx, prod_rx])]

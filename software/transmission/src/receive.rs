@@ -2,7 +2,10 @@ use bbqueue::{Consumer, SplitGrantR};
 use postcard::from_bytes_cobs;
 use serde::Deserialize;
 
-pub fn receive<T: for<'a> Deserialize<'a>, const N: usize>(cons: &mut Consumer<N>, cb: impl Fn(T)) {
+pub fn receive<T: for<'a> Deserialize<'a>, const N: usize>(
+    cons: &mut Consumer<N>,
+    cb: impl FnMut(postcard::Result<T>),
+) {
     if is_at_package_start(cons) == false {
         skip_to_package_start(cons);
     }
@@ -86,67 +89,51 @@ fn skip_to_package_start<const N: usize>(cons: &mut Consumer<N>) {
     grant.release(zeros_to_skip + non_zeros_to_skip - 1);
 }
 
-pub fn decode<T: for<'a> Deserialize<'a>, const N: usize>(data: &mut [u8], cb: impl Fn(T)) {
+pub fn decode<T: for<'a> Deserialize<'a>, const N: usize>(
+    data: &mut [u8],
+    mut cb: impl FnMut(postcard::Result<T>),
+) {
     let res = from_bytes_cobs::<T>(data);
-
-    match res {
-        Ok(msg) => {
-            cb(msg);
-        }
-        Err(_) => panic!("Could not decode data"),
-    }
+    cb(res);
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_messages::*;
     #[allow(unused_imports)]
     use bbqueue::BBBuffer;
     use heapless::String;
-    use serde::{Deserialize, Serialize};
     use std::cell::Cell;
-
-    #[derive(Serialize, Deserialize, Debug, PartialEq)]
-    pub enum MsgTypes {
-        Msg(String<32>),
-        Test1(u32),
-        Test2(f32, u8),
-    }
 
     #[test]
     fn test_decode_1() {
-        {
-            let called = Cell::new(false);
-            decode::<MsgTypes, 32>(&mut [3, 1, 18, 0], |msg| {
-                assert_eq!(msg, MsgTypes::Test1(18));
-                called.set(true);
-            });
-            assert!(called.get());
+        macro_rules! t {
+            ($data:expr, $result:expr) => {
+                let called = Cell::new(CallbackCalled::None);
+                decode::<MsgTypes, 32>(&mut $data, |res| match res {
+                    Ok(msg) => {
+                        assert_eq!(msg, $result);
+                        called.set(CallbackCalled::Ok);
+                    }
+                    Err(_) => {
+                        called.set(CallbackCalled::Err);
+                    }
+                });
+                assert_eq!(called.get(), CallbackCalled::Ok);
+            };
         }
-        {
-            let called = Cell::new(false);
-            decode::<MsgTypes, 32>(&mut [2, 2, 1, 4, 64, 63, 13, 0], |msg| {
-                assert_eq!(msg, MsgTypes::Test2(0.75, 13));
-                called.set(true);
-            });
-            assert!(called.get());
-        }
-        {
-            let called = Cell::new(false);
-            decode::<MsgTypes, 32>(&mut [1, 7, 5, 72, 101, 108, 108, 111, 0], |msg| {
-                assert_eq!(msg, MsgTypes::Msg(String::from("Hello")));
-                called.set(true);
-            });
-            assert!(called.get());
-        }
-        {
-            let called = Cell::new(false);
-            decode::<MsgTypes, 32>(&mut [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0], |msg| {
-                assert_eq!(msg, MsgTypes::Msg(String::from("PANIC!!!")));
-                called.set(true);
-            });
-            assert!(called.get());
-        }
+
+        t!([3, 1, 18, 0], MsgTypes::Test1(18));
+        t!([2, 2, 1, 4, 64, 63, 13, 0], MsgTypes::Test2(0.75, 13));
+        t!(
+            [1, 7, 5, 72, 101, 108, 108, 111, 0],
+            MsgTypes::Msg(String::from("Hello"))
+        );
+        t!(
+            [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0],
+            MsgTypes::Msg(String::from("PANIC!!!"))
+        );
     }
 
     #[test]
@@ -158,25 +145,38 @@ mod tests {
 
                 write_data!(prod, $data);
 
-                let called = Cell::new(false);
-                receive::<MsgTypes, 32>(&mut cons, |msg| {
-                    assert_eq!(msg, $result);
-                    called.set(true);
+                let called = Cell::new(CallbackCalled::None);
+                receive::<MsgTypes, 32>(&mut cons, |res| match res {
+                    Ok(msg) => {
+                        assert_eq!(msg, $result);
+                        called.set(CallbackCalled::Ok);
+                    }
+                    Err(_) => {
+                        called.set(CallbackCalled::Err);
+                    }
                 });
                 assert_eq!(called.get(), $valid);
                 assert_bufs_eq!(cons, [0]);
             };
         }
 
-        t!([0, 4, 3, 1, 18, 0], true, MsgTypes::Test1(18));
+        t!([0, 4, 3, 1, 18, 0], CallbackCalled::Ok, MsgTypes::Test1(18));
         t!(
             [0, 11, 1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0,],
-            true,
+            CallbackCalled::Ok,
             MsgTypes::Msg(String::from("PANIC!!!"))
         );
-        t!([1, 1, 0, 0, 0, 4, 3, 1, 18, 0], true, MsgTypes::Test1(18));
+        t!(
+            [1, 1, 0, 0, 0, 4, 3, 1, 18, 0],
+            CallbackCalled::Ok,
+            MsgTypes::Test1(18)
+        );
 
-        t!([99, 4, 3, 1, 18, 0], false, MsgTypes::Test1(18));
+        t!(
+            [99, 4, 3, 1, 18, 0],
+            CallbackCalled::None,
+            MsgTypes::Test1(18)
+        );
     }
 
     #[test]

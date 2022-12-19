@@ -39,36 +39,40 @@ pub fn encode<T: Serialize, const N: usize>(msg: &T) -> Result<Vec<u8, N>, &'sta
     }
 }
 
+#[cfg(test)]
 mod tests {
     #[allow(unused_imports)]
     use super::*;
+    use crate::test_messages::{Data, MsgTypes};
     #[allow(unused_imports)]
     use bbqueue::BBBuffer;
     use heapless::String;
-    use serde::{Deserialize, Serialize};
-
-    #[derive(Serialize, Deserialize, Debug, PartialEq)]
-    pub enum MsgTypes {
-        Msg(String<120>),
-        Test1(u32),
-        Test2(f32, u8),
-    }
 
     #[test]
     fn test_encode_1() {
-        let res = encode::<MsgTypes, 32>(&MsgTypes::Test1(18));
-        assert_eq!(res, Ok(hVec!(32, [3, 1, 18, 0])));
+        macro_rules! t {
+            ($input:expr, $result:expr) => {
+                let res = encode::<MsgTypes, 32>(&$input);
+                assert_eq!(res, Ok(hVec!(32, $result)));
+            };
+        }
 
-        let res = encode::<MsgTypes, 32>(&MsgTypes::Test2(0.75, 13));
-        assert_eq!(res, Ok(hVec!(32, [2, 2, 1, 4, 64, 63, 13, 0])));
-
-        let res = encode::<MsgTypes, 32>(&MsgTypes::Msg(String::from("Hello")));
-        assert_eq!(res, Ok(hVec!(32, [1, 7, 5, 72, 101, 108, 108, 111, 0])));
-
-        let res = encode::<MsgTypes, 32>(&MsgTypes::Msg(String::from("PANIC!!!")));
-        assert_eq!(
-            res,
-            Ok(hVec!(32, [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0,]))
+        t!(MsgTypes::Test1(18), [3, 1, 18, 0]);
+        t!(MsgTypes::Test2(0.75, 13), [2, 2, 1, 4, 64, 63, 13, 0]);
+        t!(
+            MsgTypes::Msg(String::from("Hello")),
+            [1, 7, 5, 72, 101, 108, 108, 111, 0]
+        );
+        t!(
+            MsgTypes::Msg(String::from("PANIC!!!")),
+            [1, 10, 8, 80, 65, 78, 73, 67, 33, 33, 33, 0]
+        );
+        t!(
+            MsgTypes::Data(Data {
+                timestamp: 123,
+                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+            }),
+            [19, 3, 123, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0]
         );
     }
 
