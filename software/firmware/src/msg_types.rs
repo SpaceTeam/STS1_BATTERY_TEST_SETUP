@@ -7,4 +7,7 @@ pub enum MsgTypes {
     Ping(u16),
     Test1(u32),
     Test2(f32, u8),
+
+    SampleAdc(u8),
+    SampleAdcResult(u16),
 }

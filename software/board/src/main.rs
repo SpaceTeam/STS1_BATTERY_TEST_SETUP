@@ -30,6 +30,8 @@ mod panic_handler;
 
 #[app(device = stm32f4xx_hal::pac, peripherals = true, dispatchers = [TIM2 ])]
 mod app {
+    use stm32f4xx_hal::gpio::Analog;
+
     use super::*;
 
     static UART_RX_BUFFER: BBBuffer<1024> = BBBuffer::new();
@@ -39,11 +41,13 @@ mod app {
     struct Shared {
         prod_tx: Producer<'static, 1024>,
         cons_rx: Consumer<'static, 1024>,
+        adc: Adc<pac::ADC1>,
     }
 
     #[local]
     struct Local<'_> {
         led: Pin<'A', 5, Output<PushPull>>,
+        adc1: Pin<'A', 0, Analog>,
         rx: Rx<pac::USART2>,
         tx: Tx<pac::USART2>,
 
@@ -72,7 +76,7 @@ mod app {
         adc.start_conversion();
 
         // let val = adc.current_sample();
-        let val = adc.convert(&analog, SampleTime::Cycles_112);
+        // let val = adc.convert(&analog, SampleTime::Cycles_112);
 
         let mono = Systick::new(ctx.core.SYST, 48_000_000);
 
@@ -96,11 +100,17 @@ mod app {
         blink::spawn().ok();
         setup(&mut prod_tx);
         send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
+        send(&mut prod_tx, MsgTypes::SampleAdcResult(1234)).unwrap();
 
         (
-            Shared { prod_tx, cons_rx },
+            Shared {
+                prod_tx,
+                cons_rx,
+                adc,
+            },
             Local {
                 led,
+                adc1: analog,
                 rx,
                 tx,
                 prod_rx,
@@ -110,7 +120,7 @@ mod app {
         )
     }
 
-    #[task(local = [led, tx, cons_tx], shared =[prod_tx, cons_rx], priority = 4)]
+    #[task(local = [led, adc1, tx, cons_tx], shared =[prod_tx, cons_rx,adc], priority = 4)]
     fn blink(mut ctx: blink::Context) {
         macro_rules! handle_msg {
             ($ctx:expr, $msg:expr) => {
@@ -118,6 +128,14 @@ mod app {
                     MsgTypes::Ping(number) => {
                         $ctx.shared.prod_tx.lock(|prod_tx| {
                             send(prod_tx, MsgTypes::Ping(number + 1)).unwrap();
+                        });
+                    }
+                    MsgTypes::SampleAdc(channel) => {
+                        $ctx.shared.prod_tx.lock(|prod_tx| {
+                            $ctx.shared.adc.lock(|adc| {
+                                let val = adc.convert(ctx.local.adc1, SampleTime::Cycles_112);
+                                send(prod_tx, MsgTypes::SampleAdcResult(val)).unwrap();
+                            });
                         });
                     }
                     _ => {}

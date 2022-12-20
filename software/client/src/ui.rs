@@ -25,6 +25,7 @@ pub enum AppEvent {
     None,
     Input(String),
     SendPing(u16),
+    SampleAdc(u8),
 }
 
 pub struct App {

@@ -36,6 +36,10 @@ fn main() {
                 app.messages.push(format!("sending ping {}", val));
                 port.send(MsgTypes::Ping(val));
             }
+            AppEvent::SampleAdc(val) => {
+                app.messages.push(format!("sending sample adc {}", val));
+                port.send(MsgTypes::SampleAdc(val));
+            }
             _ => {}
         }
 
@@ -47,6 +51,10 @@ fn main() {
             }
             MsgTypes::Ping(val) => {
                 app.messages.push(format!("received ping: {}", val));
+            }
+            MsgTypes::SampleAdcResult(val) => {
+                app.messages
+                    .push(format!("received sample adc result: {}", val));
             }
             _ => {
                 app.messages.push(format!(
