@@ -1,4 +1,5 @@
 use bbqueue::BBBuffer;
+use firmware::msg_types::MsgTypes;
 use heapless::String;
 use serde::{Deserialize, Serialize};
 use serialport;
@@ -9,14 +10,6 @@ mod serial_manager;
 mod ui;
 
 const BUFFER_SIZE: usize = 1024;
-
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub enum MsgTypes {
-    Msg(String<128>),
-    Ping(u16),
-    Test1(u32),
-    Test2(f32, u8),
-}
 
 fn main() {
     let mut terminal = ui::setup().unwrap();

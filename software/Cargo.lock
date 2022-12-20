@@ -93,6 +93,7 @@ dependencies = [
  "bbqueue",
  "cortex-m",
  "cortex-m-rtic",
+ "firmware",
  "heapless",
  "serde",
  "stm32f4xx-hal",
@@ -124,6 +125,7 @@ version = "0.1.0"
 dependencies = [
  "bbqueue",
  "crossterm",
+ "firmware",
  "heapless",
  "serde",
  "serialport",
@@ -273,6 +275,8 @@ checksum = "723dce4e9f25b6e6c5f35628e144794e5b459216ed7da97b7c4b66cdb3fa82ca"
 name = "firmware"
 version = "0.1.0"
 dependencies = [
+ "heapless",
+ "serde",
  "transmission",
 ]
 

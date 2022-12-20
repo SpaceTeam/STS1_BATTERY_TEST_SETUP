@@ -1,6 +1,6 @@
-use crate::app::MsgTypes;
 use bbqueue::BBBuffer;
 use core::fmt::Write;
+use firmware::msg_types::MsgTypes;
 use heapless::String;
 use stm32f4xx_hal::block;
 use stm32f4xx_hal::{pac, prelude::*, serial::*};

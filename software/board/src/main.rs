@@ -6,8 +6,8 @@
 use rtic::app;
 
 use bbqueue::{BBBuffer, Consumer, Producer};
+use firmware::msg_types::MsgTypes;
 use heapless::String;
-use serde::{Deserialize, Serialize};
 use stm32f4xx_hal::block;
 use stm32f4xx_hal::serial::Event;
 use stm32f4xx_hal::{
@@ -34,14 +34,6 @@ mod app {
 
     static UART_RX_BUFFER: BBBuffer<1024> = BBBuffer::new();
     static UART_TX_BUFFER: BBBuffer<1024> = BBBuffer::new();
-
-    #[derive(Serialize, Deserialize, Debug, PartialEq)]
-    pub enum MsgTypes {
-        Msg(String<128>),
-        Ping(u16),
-        Test1(u32),
-        Test2(f32, u8),
-    }
 
     #[shared]
     struct Shared {
