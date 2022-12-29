@@ -4,6 +4,7 @@ use crossterm::{
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
+use easy_min_max::max;
 use std::{error::Error, io, time::Duration};
 use tui::{
     backend::{Backend, CrosstermBackend},
@@ -181,10 +182,14 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
         }
     }
 
+    let height = chunks[2].height as i32;
+    let to_skip = max!(0, app.messages.len() as i32 - height) as usize;
+
     let messages: Vec<ListItem> = app
         .messages
         .iter()
         .enumerate()
+        .skip(to_skip)
         .map(|(i, m)| {
             let content = vec![Spans::from(Span::raw(format!("{}: {}", i, m)))];
             ListItem::new(content)

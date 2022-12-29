@@ -13,3 +13,4 @@ serde = { version = "1.0.147", default-features = false } # without std dependen
 tui = "0.19"
 crossterm = "0.25"
 unicode-width = "0.1.9"
+easy-min-max = "1.0.0"
