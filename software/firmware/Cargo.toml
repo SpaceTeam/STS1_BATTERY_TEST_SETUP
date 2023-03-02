@@ -9,3 +9,6 @@ edition = "2021"
 transmission = {path = "../transmission"}
 heapless = "0.7.16"
 serde = { version = "1.0.147", default-features = false } # without std dependency
+time = { version = "0.3.17", default-features = false }
+postcard = "1.0.2"
+libm = "0.2.6"

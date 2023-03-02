@@ -4,7 +4,10 @@
 
 #[allow(unused_imports)]
 use rtic::app;
+use stm32f4xx_hal::gpio::Alternate;
+use stm32f4xx_hal::timer::PwmChannel;
 
+use crate::interfaces::*;
 use bbqueue::{BBBuffer, Consumer, Producer};
 use firmware::msg_types::MsgTypes;
 use heapless::String;
@@ -15,22 +18,49 @@ use stm32f4xx_hal::{
         config::{AdcConfig, SampleTime, Sequence},
         Adc,
     },
-    gpio::{Output, Pin, PushPull},
+    gpio::{Analog, Output, Pin, PushPull},
     pac,
     prelude::*,
+    rtc::{Lse, Lsi, Rtc},
     serial::*,
+    timer,
 };
 use systick_monotonic::{fugit::Duration, Systick};
+use time::PrimitiveDateTime;
 use transmission::{
     receive::receive,
     send::{send, setup},
 };
+// use firmware::
 
+mod interfaces;
 mod panic_handler;
 
+type Firmware = firmware::Firmware<
+    interfaces::SerialReceiver,
+    interfaces::SerialTransmitter,
+    interfaces::GpioOutput<'A', 5, Output<PushPull>>,
+    interfaces::AdcInput<'A', 0, Analog>,
+    interfaces::PwmOutput<PwmChannel<pac::TIM1, 1>>,
+>;
+type BatteryTestUnit = firmware::BatteryTestUnit<
+    interfaces::AdcInput<'A', 0, Analog>,
+    interfaces::PwmOutput<PwmChannel<pac::TIM1, 1>>,
+>;
 #[app(device = stm32f4xx_hal::pac, peripherals = true, dispatchers = [TIM2 ])]
 mod app {
-    use stm32f4xx_hal::gpio::Analog;
+    use firmware::{
+        traits::{PwmOutput, SerialReceiver},
+        BatteryTestUnitMode,
+    };
+    use heapless::pool::Box;
+    use stm32f4xx_hal::{
+        gpio::Analog,
+        pac::TIM1,
+        timer::{Channel, Pwm, PwmChannel},
+    };
+
+    use crate::interfaces::SerialTransmitter;
 
     use super::*;
 
@@ -41,13 +71,13 @@ mod app {
     struct Shared {
         prod_tx: Producer<'static, 1024>,
         cons_rx: Consumer<'static, 1024>,
-        adc: Adc<pac::ADC1>,
+        // adc: Adc<pac::ADC1>,
+        rtc: Rtc<Lsi>,
+        fm: Firmware,
     }
 
     #[local]
     struct Local<'_> {
-        led: Pin<'A', 5, Output<PushPull>>,
-        adc1: Pin<'A', 0, Analog>,
         rx: Rx<pac::USART2>,
         tx: Tx<pac::USART2>,
 
@@ -59,12 +89,18 @@ mod app {
     type Tonic = Systick<1000>;
 
     #[init]
-    fn init(ctx: init::Context) -> (Shared, Local, init::Monotonics) {
+    fn init(mut ctx: init::Context) -> (Shared, Local, init::Monotonics) {
         let rcc = ctx.device.RCC.constrain();
         let _clocks = rcc.cfgr.sysclk(48.MHz()).freeze();
 
         let gpioa = ctx.device.GPIOA.split();
         let led = gpioa.pa5.into_push_pull_output();
+
+        // let test = GpioOutput {
+        //     pin: gpioa.pa5.into_push_pull_output(),
+        // };
+
+        // let led = Pin::<'A', 5, Output<PushPull>>::new();
 
         let config = AdcConfig::default();
 
@@ -75,10 +111,23 @@ mod app {
         adc.enable();
         adc.start_conversion();
 
+        let a = AdcInput::new(analog, adc);
+
+        let mut pwm_pin = gpioa.pa9.into_alternate();
+        let mut pwm = ctx.device.TIM1.pwm_hz(pwm_pin, 50.kHz(), &_clocks).split();
+
+        let max_duty = pwm.get_max_duty();
+        pwm.enable();
+        // pwm.set_duty(390);
+
+        let mut p = interfaces::PwmOutput::<PwmChannel<TIM1, 1>> { pwm };
+
+        p.set_duty_cycle(550);
+
         // let val = adc.current_sample();
         // let val = adc.convert(&analog, SampleTime::Cycles_112);
 
-        let mono = Systick::new(ctx.core.SYST, 48_000_000);
+        let mut mono = Systick::new(ctx.core.SYST, 48_000_000);
 
         let mut s = Serial::new(
             ctx.device.USART2,
@@ -97,20 +146,54 @@ mod app {
         let (prod_rx, cons_rx) = UART_RX_BUFFER.try_split().unwrap();
         let (mut prod_tx, cons_tx) = UART_TX_BUFFER.try_split().unwrap();
 
+        let mut rtc = Rtc::lsi_with_config(ctx.device.RTC, &mut ctx.device.PWR, 249, 127);
+        rtc.set_datetime(&time::PrimitiveDateTime::new(
+            time::Date::from_calendar_date(2000, time::Month::January, 1).unwrap(),
+            time::Time::from_hms(0, 0, 0).unwrap(),
+        ));
+
+        // btu.set_mode(BatteryTestUnitMode::Discharging(1.3));
+
+        let mut fm = Firmware {
+            serial_receiver: interfaces::SerialReceiver {},
+            serial_transmitter: SerialTransmitter {},
+            on_board_led: GpioOutput::new(led),
+            btu1: BatteryTestUnit::new(a, p),
+        };
+
+        fm.btu1.set_mode(BatteryTestUnitMode::Discharging(1.3));
+
         blink::spawn().ok();
+        update_btu::spawn().ok();
+
         setup(&mut prod_tx);
         send(&mut prod_tx, MsgTypes::Msg(String::from("Init done"))).unwrap();
-        send(&mut prod_tx, MsgTypes::SampleAdcResult(1234)).unwrap();
+        send(&mut prod_tx, MsgTypes::SampleAdcResult(max_duty)).unwrap();
+        // send(&mut prod_tx, MsgTypes::SampleAdcResult(1234)).unwrap();
+        // send(&mut prod_tx, MsgTypes::SampleAdcResult(t.millisecond())).unwrap();
+
+        // cortex_m::asm::delay(100_000_000);
+        // send(&mut prod_tx, MsgTypes::SampleAdcResult(t.second() as u16)).unwrap();
+
+        // cortex_m::peripheral::syst.enable_counter();
+        // ctx.device.
+
+        // let t = mono.now().checked_duration_since(Systick::zero()).unwrap();
+        // send(
+        //     &mut prod_tx,
+        //     MsgTypes::SampleAdcResult(t.to_millis() as u32),
+        // )
+        // .unwrap();
 
         (
             Shared {
                 prod_tx,
                 cons_rx,
-                adc,
+                // adc,
+                rtc,
+                fm,
             },
             Local {
-                led,
-                adc1: analog,
                 rx,
                 tx,
                 prod_rx,
@@ -120,7 +203,27 @@ mod app {
         )
     }
 
-    #[task(local = [led, adc1, tx, cons_tx], shared =[prod_tx, cons_rx,adc], priority = 4)]
+    #[task(shared = [ rtc, prod_tx, fm ], priority = 4)]
+    fn update_btu(mut ctx: update_btu::Context) {
+        let t = ctx.shared.rtc.lock(|rtc| rtc.get_datetime());
+        let time = t.second() as f32 / 2.0;
+
+        ctx.shared.fm.lock(|fm| {
+            fm.update_battery_units(time, 0.0);
+        });
+
+        // ctx.shared.btu.lock(|btu| {
+        //     btu.update(time, 0.0);
+        // });
+
+        ctx.shared.prod_tx.lock(|prod_tx| {
+            send(prod_tx, MsgTypes::SampleAdcResult(time as u16)).unwrap();
+        });
+
+        update_btu::spawn_after(Duration::<u64, 1, 1000>::from_ticks(100)).ok();
+    }
+
+    #[task(local = [tx, cons_tx], shared =[fm, prod_tx, cons_rx,  rtc], priority = 4)]
     fn blink(mut ctx: blink::Context) {
         macro_rules! handle_msg {
             ($ctx:expr, $msg:expr) => {
@@ -130,20 +233,29 @@ mod app {
                             send(prod_tx, MsgTypes::Ping(number + 1)).unwrap();
                         });
                     }
-                    MsgTypes::SampleAdc(channel) => {
-                        $ctx.shared.prod_tx.lock(|prod_tx| {
-                            $ctx.shared.adc.lock(|adc| {
-                                let val = adc.convert(ctx.local.adc1, SampleTime::Cycles_112);
-                                send(prod_tx, MsgTypes::SampleAdcResult(val)).unwrap();
-                            });
-                        });
-                    }
+                    // MsgTypes::SampleAdc(channel) => {
+                    // $ctx.shared.prod_tx.lock(|prod_tx| {
+                    // $ctx.shared.adc.lock(|adc| {
+                    //     let val = adc.convert(ctx.local.adc1, SampleTime::Cycles_112);
+                    //     send(prod_tx, MsgTypes::SampleAdcResult(val)).unwrap();
+                    // });
+                    // });
+                    // }
                     _ => {}
                 }
             };
         }
 
-        ctx.local.led.toggle();
+        // let t = monotonics::now()
+        //     .checked_duration_since(Systick::zero())
+        //     .unwrap();
+        // ctx.shared.prod_tx.lock(|prod_tx| {
+        //     send(prod_tx, MsgTypes::SampleAdcResult(t.to_millis() as u32)).unwrap();
+        // });
+
+        ctx.shared.fm.lock(|fm| {
+            fm.toggle_on_board_led();
+        });
 
         match ctx.local.cons_tx.read() {
             Ok(rgr) => {
